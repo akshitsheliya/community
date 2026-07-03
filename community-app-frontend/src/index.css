@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+body {
+  @apply bg-white text-theme;
+}
+ 
+/* .admin-theme {
+  @apply bg-admin text-white;
+}
+ 
+*/
+input {
+  @apply border border-theme text-theme focus:ring-theme focus:border-theme;
+}
+ 
+/* .admin-theme input {
+  @apply border-admin text-admin focus:ring-admin focus:border-admin;
+}
+ 
+*/
+ 
+button {
+  @apply bg-theme border border-theme px-4 py-2 rounded hover:bg-theme hover:text-white transition;
+}
+ 
+/* .admin-theme button {
+  @apply text-white border border-admin px-4 py-2 rounded hover:bg-white hover:text-admin transition;
+}
+ 
+*/
+/* Change Spin Loader Color */
+.custom-spin .ant-spin-dot-item {
+  background-color: white; /* Replace with your desired color */
+}
+ 
+input::placeholder {
+  color: #555; /* Dark gray color */
+}
+ 
+.css-1dkpsh1-control {
+  @apply w-full p-1.5 border-[1.5px] border-black rounded-md text-sm shadow-md outline-none placeholder-[#788288] text-black md:text-base !important;
+}
+/* In your global styles (e.g., index.css or App.css) */
+.no-scroll {
+  overflow: hidden; /* Disable body scrolling */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+ 
+::-webkit-scrollbar {
+  display: none;
+}
+ 
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+ 
+.ant-picker {
+  border-color: black;
+}
+.ant-picker-outlined:hover {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+  width: 100%;
+  /* padding: 10px; */
+  border: 1.5px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  outline: none;
+  color: black;
+  color: #788288;
+  border-color: black;
+  color: black;
+}
+/* body .ant-modal.css-dev-only-do-not-override-240cud {
+  margin: 0px !important;
+  margin-left: 8px !important;
+} */
+/* .ant-modal {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  position: fixed !important;
+  margin-left: 8px !important;
+} */
+ 
+.ant-badge {
+  display: flex !important;
+}
+ 
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+ 
+.animate-blink {
+  animation: blink 1.5s infinite ease-in-out;
+}
+ 
+ 

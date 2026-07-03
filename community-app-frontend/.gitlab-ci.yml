@@ -1,0 +1,31 @@
+variables:
+  GIT_DEPTH: 1
+  GIT_CLONE_PATH: $CI_BUILDS_DIR/$CI_RUNNER_SHORT_TOKEN/0/$CI_PROJECT_PATH/$CI_COMMIT_BRANCH
+
+stages:
+  - build-dev
+
+build:
+  stage: build-dev
+  script:
+    - export NODE_OPTIONS=--max-old-space-size=4096
+    - sudo cp /home/weenggs-snehmilan/htdocs/community-app-frontend.env $GIT_CLONE_PATH/.env
+    - sudo chown gitlab-runner:gitlab-runner $GIT_CLONE_PATH/.env
+    - cd $GIT_CLONE_PATH && bun install
+    - cd $GIT_CLONE_PATH && bun run build
+    - |
+      if pm2 describe community-app-frontend-dev > /dev/null
+      then
+        echo "The process is running, restarting..."
+        pm2 restart community-app-frontend-dev --time
+      else
+        echo "The process is not running, so starting..."
+        pm2 start "bun run serve --host=0.0.0.0 --port=4001" --name community-app-frontend-dev --time
+      fi
+    - pm2 save
+  only:
+    - dev
+  tags:
+    - weenggs-vm-102
+  when: manual
+  
