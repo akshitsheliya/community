@@ -36,6 +36,9 @@ import appNotificationRoutes from "./routes/appNotificationRoutes";
 import appVersionRoutes from "./routes/appVersionRoutes";
 import communityNumberRoutes from "./routes/communityNumberRoutes";
 import businessRoutes from "./routes/businessRoutes";
+import familyGraphRoutes from "./routes/familyGraphRoutes";
+import familyMatcherRoutes from './routes/familyMatcherRoutes';
+import familyJoinRequestRoutes from './routes/familyJoinRequestRoutes';
 
 const app = express();
 
@@ -105,6 +108,10 @@ app.use(
   communityNumberRoutes,
   businessRoutes
 );
+
+app.use('/api/family-graph', familyGraphRoutes);
+app.use('/api/family-matcher', familyMatcherRoutes);
+app.use('/api/family-join', familyJoinRequestRoutes);
 
 app.use(errorHandler);
 

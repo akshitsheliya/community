@@ -13,14 +13,15 @@ const serviceAccountPath = path.join(baseDir, "firebase-service-account.json");
 // Check if the file exists
 if (!fs.existsSync(serviceAccountPath)) {
   console.error("❌ Firebase service account file not found at:", serviceAccountPath);
-  process.exit(1); // Stop execution
+  console.warn("⚠️ Bypassing Firebase initialization. // TODO: Setup Firebase credentials.");
+  // process.exit(1); // Stop execution
+} else {
+  // Load service account file
+  const serviceAccount = require(serviceAccountPath);
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
 }
-
-// Load service account file
-const serviceAccount = require(serviceAccountPath);
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
 
 export default admin;

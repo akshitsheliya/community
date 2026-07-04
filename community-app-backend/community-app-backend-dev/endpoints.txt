@@ -1,0 +1,81 @@
+﻿
+Line                                                                                                                   
+----                                                                                                                   
+router.get("/abroad", verifyToken, getAllMembers);                                                                     
+router.get("/abroad/:abroad_uuid", verifyToken, getMemberByUuid);                                                      
+router.post("/abroad", verifyToken, uploadPassportPhoto, addMember);                                                   
+router.put("/abroad/:abroad_uuid", verifyToken, uploadPassportPhoto, updateMember);                                    
+router.delete("/abroad/:abroad_uuid", verifyToken, deleteMember);                                                      
+router.post("/community-admin/assign", verifyToken, authenticateAdmin, assignCommunityAdmin);                          
+router.get("/admin-data", verifyToken, authenticateAdmin, adminCheck);                                                 
+router.post('/albums', verifyToken, createPhotoAlbum);                                                                 
+router.get('/albums', verifyToken, getPhotoAlbums);                                                                    
+router.delete('/albums/:album_uuid', verifyToken, deletePhotoAlbum);                                                   
+router.put('/albums/:album_uuid', verifyToken, updatePhotoAlbum);                                                      
+router.put('/language', verifyToken, updateAppLanguage);                                                               
+router.get("/notification", verifyToken, getAppNotifications);                                                         
+router.put(                                                                                                            
+router.put("/notification", verifyToken, markAllNotificationsAsRead);                                                  
+Router.get('/version', verifyToken, getAppVersion as express.RequestHandler);                                          
+authRouter.post("/register/mobile", registerMobile);                                                                   
+authRouter.post("/register/verify-otp", verifyOTP);                                                                    
+authRouter.post("/login/mobile", loginWithMobile);                                                                     
+authRouter.post("/login/verify-otp", verifyLoginOTP);                                                                  
+authRouter.post("/delete-account", requestAccountDeletion);                                                            
+authRouter.post("/profile", verifyToken, uploadProfilePhoto, createProfile); // Applying the verifyToken middleware ...
+router.get("/award-eligible", verifyToken, AwardEligibleController.getAllStudents);                                    
+router.get("/generate-pdf", verifyToken, AwardEligibleController.generateTop5Pdf);                                     
+router.get("/business", verifyToken, getAllBusinesses);                                                                
+router.get("/business/:business_uuid", verifyToken, getBusinessByUUID);                                                
+router.post("/business", verifyToken, uploadBusinessMedia, addBusiness);                                               
+router.put("/business/:business_uuid", verifyToken, uploadBusinessMedia, updateBusiness);                              
+router.delete("/business/:business_uuid", verifyToken, deleteBusiness);                                                
+router.get("/business-categories", verifyToken, getAllBusinessCategories);                                             
+router.get("/committee", verifyToken, getCommitteeMember);                                                             
+router.put("/committee/:member_uuid", verifyToken, addCommitteeMember);                                                
+router.put("/edit-committee/:member_uuid", verifyToken, editCommitteeMember);                                          
+router.delete("/committee/:member_uuid", verifyToken, deleteCommitteeMember);                                          
+router.get("/community", getCommunity);                                                                                
+router.post("/auth/change-community", verifyToken, changeCommunity as any);                                            
+router.get("/counts", verifyToken, getCounts);                                                                         
+router.delete("/user", verifyToken, deleteUser);                                                                       
+router.delete("/member/:member_uuid", verifyToken, deleteMemberByUUID);                                                
+router.post('/donors', verifyToken, uploadDonorPhoto, createDonor);                                                    
+router.get('/members', verifyToken, getAllMembers);                                                                    
+router.post('/donors/:member_uuid', verifyToken, createDonorFromMember);                                               
+router.get('/donors', verifyToken, getAllDonors);                                                                      
+router.delete('/donors/:donor_id', verifyToken, deleteDonor);                                                          
+router.put('/donors/:donor_id', verifyToken, uploadDonorPhoto, updateDonor);                                           
+router.post("/face-recognition/album/:album_uuid", verifyToken, authenticateAdmin, triggerFaceRecognition);            
+router.post("/selfie/upload", verifyToken, uploadSelfies, uploadSelfie);                                               
+router.get("/selfies", verifyToken, getUserSelfies);                                                                   
+router.get("/selfie/:selfie_uuid/album/:album_uuid", verifyToken, getSelfiePhotos);                                    
+router.delete("/selfie/:selfie_uuid", verifyToken, deleteSelfie);                                                      
+router.post("/face/process-selfie", processNextSelfie);                                                                
+router.post(                                                                                                           
+router.get("/representatives", verifyToken, getFamilyRepresentatives);                                                 
+router.get("/families", verifyToken, getFamilyDetails);                                                                
+router.post("/process-marksheet", verifyToken, uploadMarksheet, processMarkSheet);                                     
+router.post("/marksheets", verifyToken, storeMarksheet);                                                               
+router.get("/marksheets", verifyToken, getMarksheet);                                                                  
+router.get("/all-marksheets", verifyToken, authenticateAdmin, getAllMarksheets);                                       
+router.put("/marksheets/approve/:id", verifyToken, authenticateAdmin, approveMarksheet);                               
+router.put("/marksheets/reject/:marksheet_uuid", verifyToken, authenticateAdmin, rejectMarksheet);                     
+router.put("/marksheets/edit/:id", verifyToken, authenticateAdmin, editMarksheet);                                     
+router.delete("/marksheets/:id", verifyToken, deleteMarksheet);                                                        
+router.get("/members-list/:family_uuid", verifyToken, getFamilyMemberDetails);  // Ensure :family_uuid is correct      
+router.get("/news", verifyToken, getNewsFeeds); // Get all news (Public - no auth)                                     
+router.get("/news/:newsUuid", verifyToken, getNewsByUuid); // Get specific news by UUID (Public - no auth)             
+router.post("/news", verifyToken, uploadNewsImage, createNews); // Create new news (Admin - auth required)             
+router.delete("/news/:newsUuid", verifyToken, deleteNewsByUuid); // Delete news by UUID                                
+router.put("/news/:newsUuid", verifyToken, uploadNewsImage, updateNews);                                               
+router.post(                                                                                                           
+router.get(                                                                                                            
+router.get("/surname", verifyToken, getSurnames);                                                                      
+router.get("/user", verifyToken, getLoggedInUserData as any);                                                          
+router.put("/user/:member_uuid", verifyToken, uploadProfileFiles, updateLoggedInUserData as any);                      
+router.get("/unverified", verifyToken, authenticateAdmin, getUnverifiedUsers);                                         
+router.put("/approve/:member_uuid", verifyToken, authenticateAdmin, approveUser);                                      
+router.put("/reject/:member_uuid", verifyToken, authenticateAdmin, rejectUser);                                        
+
+

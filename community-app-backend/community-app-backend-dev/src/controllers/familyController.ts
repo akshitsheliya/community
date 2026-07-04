@@ -121,7 +121,7 @@ export const getMembersByFamilyId = async (req: Request, res: Response) => {
 
     logger.info(`📤 [${userId}] Querying members for familyId: ${familyId}, search: ${search}, page: ${page}, limit: ${limit}`, { user_id: userId });
     const result = await familyModel.getMembersByFamilyId(
-      familyId,
+      familyId as string,
       limit,
       page,
       search
