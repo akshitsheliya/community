@@ -112,18 +112,23 @@ export const addCommitteeMember = async (req: Request, res: Response) => {
       return sendResponse(res, 400, false, getMessage("all_fields_req", req.lang));
     }
 
-    const allowedDesignations = [
-      "pramukh",
-      "up pramukh",
-      "mantri",
-      "sah mantri",
-      "committee member",
-    ];
-
-    if (!allowedDesignations.includes(designation)) {
-      logger.warn("❌ Invalid designation", { user_id, designation });
-      return sendResponse(res, 400, false, getMessage("invalid_designation", req.lang));
+    let normalizedDesignation = String(designation).toLowerCase();
+    const designationMapping: Record<string, string> = {
+      'president': 'pramukh',
+      'vice president': 'up pramukh',
+      'secretary': 'mantri',
+      'joint secretary': 'sah mantri',
+      'committee member': 'committee member',
+      'member': 'committee member',
+    };
+    
+    // Map to backend expected format if possible
+    if (designationMapping[normalizedDesignation]) {
+      normalizedDesignation = designationMapping[normalizedDesignation];
     }
+    
+    // Override designation with normalized version
+    designation = normalizedDesignation as any;
 
     const existingMember = await memberModel.getMemberByUuid(member_uuid);
     if (!existingMember) {
@@ -190,7 +195,7 @@ export const addCommitteeMember = async (req: Request, res: Response) => {
       };
 
       const appLanguage = rows[0]?.app_language === "gu_IN" ? "gu_IN" : "en_US";
-      const designationText = designationLabels[appLanguage][designation];
+      const designationText = designationLabels[appLanguage]?.[designation as keyof typeof designationLabels['en_US']] || designation;
 
       // Store Notification
       await storeNotification(
@@ -301,22 +306,22 @@ export const editCommitteeMember = async (req: Request, res: Response) => {
       );
     }
 
-    const allowedDesignations = [
-      "pramukh",
-      "up pramukh",
-      "mantri",
-      "sah mantri",
-      "committee member",
-    ];
-    if (!allowedDesignations.includes(designation)) {
-      logger.warn(`⚠️ [${user_id}] Invalid designation provided: ${designation}`, { user_id });
-      return sendResponse(
-        res,
-        400,
-        false,
-        getMessage("invalid_designation", req.lang)
-      );
+    let normalizedDesignation = String(designation).toLowerCase();
+    const designationMapping: Record<string, string> = {
+      'president': 'pramukh',
+      'vice president': 'up pramukh',
+      'secretary': 'mantri',
+      'joint secretary': 'sah mantri',
+      'committee member': 'committee member',
+      'member': 'committee member',
+    };
+    
+    if (designationMapping[normalizedDesignation]) {
+      normalizedDesignation = designationMapping[normalizedDesignation];
     }
+    
+    // Override designation
+    designation = normalizedDesignation as any;
 
     const existingMember = await memberModel.getMemberByUuid(member_uuid);
     if (!existingMember || existingMember.is_committee_member !== 1) {
@@ -386,7 +391,7 @@ export const editCommitteeMember = async (req: Request, res: Response) => {
       };
 
       const langKey = appLanguage === "gu_IN" ? "gu_IN" : "en_US";
-      const designationText = designationLabels[langKey][designation];
+      const designationText = designationLabels[langKey]?.[designation as keyof typeof designationLabels['en_US']] || designation;
 
       const title = langKey === "gu_IN" ? "હોદ્દો અપડેટ થયો!" : "Designation Updated!";
       const message =
